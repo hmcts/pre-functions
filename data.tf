@@ -18,3 +18,7 @@ data "azurerm_storage_account" "ingest_sa" {
   name                = "${var.product}ingestsa${var.env}"
   resource_group_name = "${var.product}-${var.env}"
 }
+
+data "azuread_application" "appreg" {
+  display_name = "dts_pre_${var.env}"
+}
