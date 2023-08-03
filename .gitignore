@@ -28,6 +28,8 @@ override.tf.json
 
 # Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan
 tfplan
+.terraform.lock.hcl
+.terraform
 
 # Ignore CLI configuration files
 .terraformrc
