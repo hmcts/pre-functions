@@ -23,13 +23,13 @@ module "ams_function_app" {
   # app_insights_key = azurerm_application_insights.appinsight.instrumentation_key
   app_settings = {
     "ALGO"                              = "['RS256']"
-    "AZURE_CLIENT_ID"                   = data.azuread_application.appreg
+    "AZURE_CLIENT_ID"                   = data.azuread_application.appreg.display_name
     "AZURE_MEDIA_SERVICES_ACCOUNT_NAME" = "preams${var.env}"
     "AZURE_TENANT_ID"                   = "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
     "ISSUER"                            = "https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/"
     "JWKSURI"                           = "https://login.microsoftonline.com/common/discovery/keys"
-    "AUDIENCE"                          = "api://${data.azuread_application.appreg}"
-    "SCOPE"                             = "api://${data.azuread_application.appreg}/.default"
+    "AUDIENCE"                          = "api://${data.azuread_application.appreg.display_name}"
+    "SCOPE"                             = "api://${data.azuread_application.appreg.display_name}/.default"
     "CONTENTPOLICYKEYNAME"              = "PolicyWithClearKeyOptionAndJwtTokenRestriction"
     "STREAMINGPOLICYNAME"               = "PreStreamingPolicy"
     "TOKENENDPOINT"                     = "https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/oauth2/token"
