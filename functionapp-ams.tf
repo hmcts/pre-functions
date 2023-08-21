@@ -9,10 +9,11 @@ data "azurerm_key_vault_secret" "client_secret" {
 }
 
 module "ams_function_app" {
-  source              = "git@github.com:hmcts/pre-functions.git//modules/function_app?ref=preview"
-  os_type             = "Linux"
-  product             = var.product
-  create_service_plan = true
+  source                     = "git@github.com:hmcts/pre-functions.git//modules/function_app?ref=preview"
+  os_type                    = "Linux"
+  product                    = var.product
+  create_service_plan        = true
+  private_endpoint_subnet_id = data.azurerm_subnet.endpoint_subnet.id
 
   resource_group_name = data.azurerm_resource_group.rg.name
   name                = "pre-ams-integration"
