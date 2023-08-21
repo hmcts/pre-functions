@@ -27,3 +27,12 @@ variable "create_service_plan" {
 # }
 
 variable "env" {}
+
+variable "private_endpoint_subnet_id" {
+  description = "Subnet ID to attach private endpoint to - overrides the default subnet id"
+  default     = null
+}
+
+variable "private_endpoint_name" {
+  default = null
+}

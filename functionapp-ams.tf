@@ -8,6 +8,17 @@ data "azurerm_key_vault_secret" "client_secret" {
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
+# module "ams_private_endpoint" {
+#   source                     = "./modules/private_endpoint"
+#   private_endpoint_subnet_id = data.azurerm_subnet.endpoint_subnet.id
+#   resource_group_name        = data.azurerm_resource_group.rg.name
+#   name                       = "pre-ams-integration"
+#   product                    = var.product
+#   location                   = var.location
+#   common_tags                = var.common_tags
+#   env                        = var.env
+# }
+
 module "ams_function_app" {
   source              = "git@github.com:hmcts/pre-functions.git//modules/function_app?ref=preview"
   os_type             = "Linux"
@@ -23,13 +34,13 @@ module "ams_function_app" {
   # app_insights_key = azurerm_application_insights.appinsight.instrumentation_key
   app_settings = {
     "ALGO"                              = "['RS256']"
-    "AZURE_CLIENT_ID"                   = data.azuread_application.appreg.display_name
+    "AZURE_CLIENT_ID"                   = data.azuread_application.appreg.application_id
     "AZURE_MEDIA_SERVICES_ACCOUNT_NAME" = "preams${var.env}"
     "AZURE_TENANT_ID"                   = "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
     "ISSUER"                            = "https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/"
     "JWKSURI"                           = "https://login.microsoftonline.com/common/discovery/keys"
-    "AUDIENCE"                          = "api://${data.azuread_application.appreg.display_name}"
-    "SCOPE"                             = "api://${data.azuread_application.appreg.display_name}/.default"
+    "AUDIENCE"                          = "api://${data.azuread_application.appreg.application_id}"
+    "SCOPE"                             = "api://${data.azuread_application.appreg.application_id}/.default"
     "CONTENTPOLICYKEYNAME"              = "PolicyWithClearKeyOptionAndJwtTokenRestriction"
     "STREAMINGPOLICYNAME"               = "PreStreamingPolicy"
     "TOKENENDPOINT"                     = "https://login.microsoftonline.com/531ff96d-0ae9-462a-8d2d-bec7c0b42082/oauth2/token"
