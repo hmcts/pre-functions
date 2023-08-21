@@ -9,7 +9,7 @@ data "azurerm_key_vault_secret" "client_secret" {
 }
 
 module "ams_function_app" {
-  source                     = "git@github.com:hmcts/pre-functions.git//modules/function_app?ref=preview"
+  source                     = "git@github.com:hmcts/pre-functions.git//modules/function_app?ref=add_pe_support_app_service"
   os_type                    = "Linux"
   product                    = var.product
   create_service_plan        = true
