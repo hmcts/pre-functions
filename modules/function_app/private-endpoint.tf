@@ -19,7 +19,7 @@ resource "azurerm_private_endpoint" "this" {
   private_service_connection {
     name                           = local.app_service_name
     is_manual_connection           = false
-    private_connection_resource_id = azurerm_windows_function_app.this[count.index].id
+    private_connection_resource_id = var.os_type == "Linux" ? azurerm_linux_function_app.this[count.index].id : azurerm_windows_function_app.this[count.index].id 
     subresource_names              = ["sites"]
   }
 
