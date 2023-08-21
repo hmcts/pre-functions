@@ -12,7 +12,7 @@ resource "azurerm_service_plan" "this" {
   resource_group_name = var.resource_group_name
   location            = var.location
   os_type             = var.os_type #"Windows"
-  sku_name            = "Y1"
+  sku_name            = "P3v2"
   # zone_balancing_enabled = true
 
   tags = var.common_tags
