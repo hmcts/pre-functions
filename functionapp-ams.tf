@@ -8,17 +8,6 @@ data "azurerm_key_vault_secret" "client_secret" {
   key_vault_id = data.azurerm_key_vault.keyvault.id
 }
 
-# module "ams_private_endpoint" {
-#   source                     = "./modules/private_endpoint"
-#   private_endpoint_subnet_id = data.azurerm_subnet.endpoint_subnet.id
-#   resource_group_name        = data.azurerm_resource_group.rg.name
-#   name                       = "pre-ams-integration"
-#   product                    = var.product
-#   location                   = var.location
-#   common_tags                = var.common_tags
-#   env                        = var.env
-# }
-
 module "ams_function_app" {
   source              = "git@github.com:hmcts/pre-functions.git//modules/function_app?ref=preview"
   os_type             = "Linux"
