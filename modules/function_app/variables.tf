@@ -26,4 +26,9 @@ variable "create_service_plan" {
 #   default     = true
 # }
 
+variable "zip_deploy_file" {
+  description = "The local path and filename to the zip file to deploy to the App Service."
+  default     = null
+}
+
 variable "env" {}

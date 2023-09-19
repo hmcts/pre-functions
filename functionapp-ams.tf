@@ -13,6 +13,7 @@ module "ams_function_app" {
   os_type             = "Linux"
   product             = var.product
   create_service_plan = true
+  # zip_deploy_file     = "./services/ams-functions.zip"
 
   resource_group_name = data.azurerm_resource_group.rg.name
   name                = "pre-ams-integration"
@@ -23,6 +24,7 @@ module "ams_function_app" {
   # app_insights_key = azurerm_application_insights.appinsight.instrumentation_key
   app_settings = {
     "ALGO"                              = "['RS256']"
+    "WEBSITE_RUN_FROM_PACKAGE"          = 1
     "AZURE_CLIENT_ID"                   = data.azuread_application.appreg.application_id
     "AZURE_MEDIA_SERVICES_ACCOUNT_NAME" = "preams${var.env}"
     "AZURE_TENANT_ID"                   = "531ff96d-0ae9-462a-8d2d-bec7c0b42082"
