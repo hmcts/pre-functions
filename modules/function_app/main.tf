@@ -52,9 +52,7 @@ resource "azurerm_windows_function_app" "this" {
   # }
 
   lifecycle {
-    ignore_changes = [
-      all,
-    ]
+    ignore_changes = all
   }
 }
 
@@ -78,6 +76,10 @@ resource "azurerm_linux_function_app" "this" {
     application_insights_connection_string = "InstrumentationKey=${azurerm_application_insights.appinsight.instrumentation_key};IngestionEndpoint=https://uksouth-0.in.applicationinsights.azure.com/"
     application_stack {
       node_version = "18"
+    }
+
+    lifecycle {
+      ignore_changes = all
     }
   }
 
