@@ -67,9 +67,6 @@ resource "azurerm_linux_function_app" "this" {
   https_only   = true
 
   tags = var.common_tags
-  lifecycle {
-    ignore_changes = all
-  }
 
   site_config {
     application_insights_connection_string = "InstrumentationKey=${azurerm_application_insights.appinsight.instrumentation_key};IngestionEndpoint=https://uksouth-0.in.applicationinsights.azure.com/"
