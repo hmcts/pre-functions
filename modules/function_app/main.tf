@@ -73,6 +73,10 @@ resource "azurerm_linux_function_app" "this" {
     application_stack {
       node_version = "18"
     }
+
+    lifecycle {
+      ignore_changes = all
+    }
   }
 
   identity {
