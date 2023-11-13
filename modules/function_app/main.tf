@@ -50,12 +50,6 @@ resource "azurerm_windows_function_app" "this" {
   #   client_id = data.azuread_application.appreg.application_id
   # }
   # }
-
-  lifecycle {
-    ignore_changes = [
-      all,
-    ]
-  }
 }
 
 resource "azurerm_linux_function_app" "this" {
@@ -94,6 +88,10 @@ resource "azurerm_linux_function_app" "this" {
   #   client_id = data.azuread_application.appreg.application_id
   # }
   # }
+
+  lifecycle {
+    ignore_changes = all
+  }
 }
 
 resource "azurerm_storage_account" "this" {
