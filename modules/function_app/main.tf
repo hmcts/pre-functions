@@ -53,9 +53,7 @@ resource "azurerm_windows_function_app" "this" {
 
   lifecycle {
     ignore_changes = [
-      tags,
-      site_config,
-      sticky_settings,
+      all,
     ]
   }
 }
