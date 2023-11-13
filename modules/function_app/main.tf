@@ -88,6 +88,7 @@ resource "azurerm_linux_function_app" "this" {
   #   client_id = data.azuread_application.appreg.application_id
   # }
   # }
+
 }
 
 resource "azurerm_storage_account" "this" {
