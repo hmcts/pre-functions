@@ -21,7 +21,6 @@ module "ams_function_app" {
   common_tags         = var.common_tags
   env                 = var.env
 
-  # app_insights_key = azurerm_application_insights.appinsight.instrumentation_key
   app_settings = {
     "ALGO"                              = "['RS256']"
     "AZURE_CLIENT_ID"                   = data.azuread_application.appreg.application_id
