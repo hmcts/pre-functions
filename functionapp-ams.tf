@@ -43,5 +43,6 @@ module "ams_function_app" {
     "AZURE_CLIENT_SECRET"               = "${data.azurerm_key_vault_secret.client_secret.value}"
     "WEBSITE_ENABLE_SYNC_UPDATE_SITE"   = "false"
     "AMS_EVENT_LOGS_CONTAINER_NAME"     = "ams-event-logs"
+    "STREAMING_LOCATOR_TTL"             = "420"
   }
 }
