@@ -13,9 +13,12 @@ resource "azurerm_service_plan" "this" {
   location            = var.location
   os_type             = var.os_type #"Windows"
   sku_name            = "Y1"
-  # zone_balancing_enabled = true
 
   tags = var.common_tags
+
+  lifecycle {
+    ignore_changes = all
+  }
 }
 
 resource "azurerm_windows_function_app" "this" {
@@ -53,10 +56,7 @@ resource "azurerm_linux_function_app" "this" {
 
   service_plan_id = azurerm_service_plan.this[0].id
 
-  for_each = var.app_settings
-  app_settings = {
-    "${each.key}" = each.value
-  }
+  app_settings = var.app_settings
 
   https_only = true
 
