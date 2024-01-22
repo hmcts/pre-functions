@@ -54,8 +54,7 @@ resource "azurerm_linux_function_app" "this" {
   service_plan_id = azurerm_service_plan.this[0].id
 
   app_settings = var.app_settings
-
-  https_only = true
+  https_only   = true
 
   tags = var.common_tags
 
