@@ -40,16 +40,6 @@ resource "azurerm_windows_function_app" "this" {
   identity {
     type = "SystemAssigned"
   }
-
-  # auth_settings {
-  # enabled                       = true
-  # unauthenticated_client_action = "RedirectToLoginPage"
-  # default_provider              = "AzureActiveDirectory"
-  # issuer                        = "https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/"
-  # active_directory {
-  #   client_id = data.azuread_application.appreg.application_id
-  # }
-  # }
 }
 
 resource "azurerm_linux_function_app" "this" {
@@ -63,8 +53,12 @@ resource "azurerm_linux_function_app" "this" {
 
   service_plan_id = azurerm_service_plan.this[0].id
 
-  app_settings = var.app_settings
-  https_only   = true
+  for_each = var.app_settings
+  app_settings = {
+    "${each.key}" = each.value
+  }
+
+  https_only = true
 
   tags = var.common_tags
 
@@ -80,12 +74,8 @@ resource "azurerm_linux_function_app" "this" {
   }
 
   lifecycle {
-    ignore_changes = [
-      app_settings["WEBSITE_ENABLE_SYNC_UPDATE_SITE"],
-      app_settings["WEBSITE_RUN_FROM_PACKAGE"]
-    ]
+    ignore_changes = [for key, value in var.app_settings : value]
   }
-
 }
 
 resource "azurerm_storage_account" "this" {
