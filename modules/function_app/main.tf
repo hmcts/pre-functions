@@ -15,7 +15,6 @@ resource "azurerm_service_plan" "this" {
   sku_name            = "Y1"
 
   tags = var.common_tags
-
 }
 
 resource "azurerm_windows_function_app" "this" {
