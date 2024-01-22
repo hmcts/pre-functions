@@ -45,10 +45,4 @@ module "ams_function_app" {
     "AMS_EVENT_LOGS_CONTAINER_NAME"     = "ams-event-logs"
     "STREAMING_LOCATOR_TTL"             = "420"
   }
-  lifecycle {
-    ignore_changes = [
-      app_settings["WEBSITE_ENABLE_SYNC_UPDATE_SITE"],
-      app_settings["WEBSITE_RUN_FROM_PACKAGE"]
-    ]
-  }
 }

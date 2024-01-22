@@ -79,15 +79,12 @@ resource "azurerm_linux_function_app" "this" {
     type = "SystemAssigned"
   }
 
-  # auth_settings {
-  # enabled                       = true
-  # unauthenticated_client_action = "RedirectToLoginPage"
-  # default_provider              = "AzureActiveDirectory"
-  # issuer                        = "https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/"
-  # active_directory {
-  #   client_id = data.azuread_application.appreg.application_id
-  # }
-  # }
+  lifecycle {
+    ignore_changes = [
+      app_settings["WEBSITE_ENABLE_SYNC_UPDATE_SITE"],
+      app_settings["WEBSITE_RUN_FROM_PACKAGE"]
+    ]
+  }
 
 }
 
