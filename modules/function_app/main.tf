@@ -16,9 +16,6 @@ resource "azurerm_service_plan" "this" {
 
   tags = var.common_tags
 
-  lifecycle {
-    ignore_changes = all
-  }
 }
 
 resource "azurerm_windows_function_app" "this" {
@@ -73,9 +70,6 @@ resource "azurerm_linux_function_app" "this" {
     type = "SystemAssigned"
   }
 
-  lifecycle {
-    ignore_changes = [for key, value in var.app_settings : value]
-  }
 }
 
 resource "azurerm_storage_account" "this" {
