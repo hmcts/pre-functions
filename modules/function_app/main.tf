@@ -13,7 +13,6 @@ resource "azurerm_service_plan" "this" {
   location            = var.location
   os_type             = var.os_type #"Windows"
   sku_name            = "Y1"
-  # zone_balancing_enabled = true
 
   tags = var.common_tags
 }
@@ -40,16 +39,6 @@ resource "azurerm_windows_function_app" "this" {
   identity {
     type = "SystemAssigned"
   }
-
-  # auth_settings {
-  # enabled                       = true
-  # unauthenticated_client_action = "RedirectToLoginPage"
-  # default_provider              = "AzureActiveDirectory"
-  # issuer                        = "https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/"
-  # active_directory {
-  #   client_id = data.azuread_application.appreg.application_id
-  # }
-  # }
 }
 
 resource "azurerm_linux_function_app" "this" {
@@ -78,16 +67,6 @@ resource "azurerm_linux_function_app" "this" {
   identity {
     type = "SystemAssigned"
   }
-
-  # auth_settings {
-  # enabled                       = true
-  # unauthenticated_client_action = "RedirectToLoginPage"
-  # default_provider              = "AzureActiveDirectory"
-  # issuer                        = "https://sts.windows.net/531ff96d-0ae9-462a-8d2d-bec7c0b42082/"
-  # active_directory {
-  #   client_id = data.azuread_application.appreg.application_id
-  # }
-  # }
 
 }
 
