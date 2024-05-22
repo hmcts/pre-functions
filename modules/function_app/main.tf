@@ -71,28 +71,16 @@ resource "azurerm_linux_function_app" "this" {
 }
 
 module "storage_account" {
-  source                          = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
-  env                             = var.env
-  storage_account_name            = replace("${var.name}${var.env}", "-", "")
-  resource_group_name             = data.azurerm_resource_group.rg.name
-  location                        = var.location
-  account_kind                    = "StorageV2"
-  account_tier                    = "Standard"
-  account_replication_type        = "ZRS"
-  allow_nested_items_to_be_public = false
-  enable_data_protection          = true
-  restore_policy_days             = var.restore_policy_days
-  enable_change_feed              = true
-  managed_identity_object_id      = data.azurerm_user_assigned_identity.managed_identity.principal_id
-  sa_subnets                      = concat([data.azurerm_subnet.jenkins_subnet.id], [data.azurerm_subnet.endpoint_subnet.id], [data.azurerm_subnet.datagateway_subnet.id], [data.azurerm_subnet.videoedit_subnet.id])
-  containers                      = local.containers
-  cors_rules = [{
-    allowed_headers    = ["*"]
-    allowed_methods    = ["GET", "OPTIONS"]
-    allowed_origins    = ["https://hmcts${var.env}extid.b2clogin.com"]
-    exposed_headers    = ["*"]
-    max_age_in_seconds = 200
-  }]
+  source                     = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
+  env                        = var.env
+  storage_account_name       = replace("${var.name}${var.env}", "-", "")
+  resource_group_name        = data.azurerm_resource_group.rg.name
+  location                   = var.location
+  account_kind               = "StorageV2"
+  account_tier               = "Standard"
+  account_replication_type   = "ZRS"
+  managed_identity_object_id = data.azurerm_user_assigned_identity.managed_identity.principal_id
+  containers                 = local.containers
 
   role_assignments = [
     "Storage Blob Data Contributor"
