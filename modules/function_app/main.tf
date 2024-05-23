@@ -79,9 +79,6 @@ module "storage_account" {
   account_kind             = "StorageV2"
   account_tier             = "Standard"
   account_replication_type = "ZRS"
-  role_assignments = [
-    "Storage Blob Data Contributor"
-  ]
 
   common_tags = var.common_tags
 }
