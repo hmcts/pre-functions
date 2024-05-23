@@ -23,8 +23,8 @@ resource "azurerm_windows_function_app" "this" {
   resource_group_name = var.resource_group_name
   location            = var.location
 
-  storage_account_name       = azurerm_storage_account.this.name
-  storage_account_access_key = azurerm_storage_account.this.primary_access_key
+  storage_account_name       = module.storage_account.storage_account_name
+  storage_account_access_key = module.storage_account.storageaccount_primary_access_key
   service_plan_id            = azurerm_service_plan.this[0].id
 
   app_settings = var.app_settings
@@ -70,14 +70,23 @@ resource "azurerm_linux_function_app" "this" {
 
 }
 
-resource "azurerm_storage_account" "this" {
-  name                            = replace("${var.name}${var.env}", "-", "")
-  resource_group_name             = data.azurerm_resource_group.rg.name
-  location                        = var.location
-  account_tier                    = "Standard"
-  account_replication_type        = "ZRS"
-  tags                            = var.common_tags
-  allow_nested_items_to_be_public = false
+module "storage_account" {
+  source                     = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
+  env                        = var.env
+  storage_account_name       = replace("${var.name}${var.env}", "-", "")
+  resource_group_name        = data.azurerm_resource_group.rg.name
+  location                   = var.location
+  account_kind               = "StorageV2"
+  account_tier               = "Standard"
+  account_replication_type   = "ZRS"
+  managed_identity_object_id = data.azurerm_user_assigned_identity.managed_identity.principal_id
+  containers                 = local.containers
+
+  role_assignments = [
+    "Storage Blob Data Contributor"
+  ]
+
+  common_tags = var.common_tags
 }
 
 module "application_insights" {
