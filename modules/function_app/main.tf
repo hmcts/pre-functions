@@ -23,7 +23,7 @@ resource "azurerm_windows_function_app" "this" {
   resource_group_name = var.resource_group_name
   location            = var.location
 
-  storage_account_name       = module.storage_account.storage_account_name
+  storage_account_name       = module.storage_account.storageaccount_name
   storage_account_access_key = module.storage_account.storageaccount_primary_access_key
   service_plan_id            = azurerm_service_plan.this[0].id
 
@@ -47,8 +47,8 @@ resource "azurerm_linux_function_app" "this" {
   resource_group_name = var.resource_group_name
   location            = var.location
 
-  storage_account_name       = azurerm_storage_account.this.name
-  storage_account_access_key = azurerm_storage_account.this.primary_access_key
+  storage_account_name       = module.storage_account.storageaccount_name
+  storage_account_access_key = module.storage_account.storageaccount_primary_access_key
 
   service_plan_id = azurerm_service_plan.this[0].id
 
@@ -71,17 +71,14 @@ resource "azurerm_linux_function_app" "this" {
 }
 
 module "storage_account" {
-  source                     = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
-  env                        = var.env
-  storage_account_name       = replace("${var.name}${var.env}", "-", "")
-  resource_group_name        = data.azurerm_resource_group.rg.name
-  location                   = var.location
-  account_kind               = "StorageV2"
-  account_tier               = "Standard"
-  account_replication_type   = "ZRS"
-  managed_identity_object_id = data.azurerm_user_assigned_identity.managed_identity.principal_id
-  containers                 = local.containers
-
+  source                   = "git@github.com:hmcts/cnp-module-storage-account?ref=master"
+  env                      = var.env
+  storage_account_name     = replace("${var.name}${var.env}", "-", "")
+  resource_group_name      = data.azurerm_resource_group.rg.name
+  location                 = var.location
+  account_kind             = "StorageV2"
+  account_tier             = "Standard"
+  account_replication_type = "ZRS"
   role_assignments = [
     "Storage Blob Data Contributor"
   ]
